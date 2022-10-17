@@ -1,0 +1,146 @@
+type code in heder
+
+using System.Data;
+using System.Data.SqlClient;
+
+partial class code :-
+
+SqlConnection con = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\hp\Documents\employee1.mdf;Integrated Security=True;Connect Timeout=30");
+        SqlCommand cmd;
+        SqlDataReader dr;
+
+
+insert button code :-
+
+con.Open();
+            string s = "insert into employee1 (Id,name,age,sallary) values ('" + TextBox1.Text + "','" + TextBox2.Text + "','" + TextBox3.Text + "','" + TextBox4.Text + "')";
+            cmd = new SqlCommand(s, con);
+            cmd.CommandType = CommandType.Text;
+
+            try
+            {
+                int result = cmd.ExecuteNonQuery();
+                if (result > 0)
+                {
+                    Label5.Text = "details saved";
+                }
+                else
+                {
+                    Label5.Text = "details failed";
+                }
+            }
+            catch(SqlException ex)
+            {
+                Label5.Text = ex.Message;
+            }
+            finally
+            {
+                con.Close();
+            }
+
+            TextBox1.Text = "";
+            TextBox2.Text = "";
+            TextBox3.Text = "";
+            TextBox4.Text = "";
+
+
+
+Update code :-
+ string s = ("Update employee1 set Id = '" + TextBox1.Text + "', name='" + TextBox2.Text + "', age= '" + TextBox3.Text + "',sallary= '" + TextBox4.Text + "' where Id ='" + TextBox1.Text + "' ");
+
+            con.Open();
+            cmd = new SqlCommand(s, con);
+            cmd.CommandType = CommandType.Text;
+            try
+            {
+                int result = cmd.ExecuteNonQuery();
+                if (result > 0)
+                {
+                    Label5.Text = "update sucessful";
+                }
+                else
+                {
+                    Label5.Text = " update failed";
+                }
+            }
+            catch (SqlException ex)
+            {
+                Label5.Text = ex.Message;
+            }
+            finally
+            {
+                con.Close();
+            }
+
+            TextBox1.Text = "";
+            TextBox1.Text = "";
+            TextBox1.Text = "";
+            TextBox1.Text = "";
+
+Delete code :-
+
+string s = ("delete from employee1 where Id = '" + TextBox1.Text + "'");
+
+            con.Open();
+            cmd = new SqlCommand(s, con);
+            cmd.CommandType = CommandType.Text;
+
+            try
+            {
+                int result = cmd.ExecuteNonQuery();
+                if (result > 0)
+                {
+                    Label5.Text = "Delete sucessful";
+                }
+                else
+                {
+                    Label5.Text = " Delete failed";
+                }
+            }
+            catch (SqlException ex)
+            {
+                Label5.Text = ex.Message;
+            }
+            finally
+            {
+                con.Close();
+            }
+
+            TextBox1.Text = "";
+            TextBox2.Text = "";
+            TextBox3.Text = "";
+            TextBox4.Text = "";
+
+Search code:-
+
+ string s = ("select* from employee1 where Id = '" + TextBox1.Text + "'");
+
+            con.Open();
+            cmd = new SqlCommand(s, con);
+            cmd.CommandType = CommandType.Text;
+
+            try
+            {
+                dr = cmd.ExecuteReader();
+                if (dr.Read())
+                {
+                    TextBox1.Text = dr[0].ToString();
+                    TextBox2.Text = dr[1].ToString();
+                    TextBox3.Text = dr[2].ToString();
+                    TextBox4.Text = dr[3].ToString();
+                }
+                else
+                {
+                    Label5.Text = "no record found";
+                }
+                dr.Close();
+
+            }
+            catch(SqlException ex)
+            {
+                Label5.Text = ex.Message;
+            }
+            finally
+            {
+                con.Close();
+            }
